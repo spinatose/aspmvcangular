@@ -11,10 +11,18 @@ namespace DutchTreat.Controllers
     public class AppController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
-        {
-            //ViewBag.Title = "Site";
+        public IActionResult Index() => View();
 
+        [HttpGet("contact")] // makes Contact view discoverable at root of site
+        public IActionResult Contact()
+        {
+            ViewBag.Title = "Contact us!";
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            ViewBag.Title = "About us!";
             return View();
         }
     }

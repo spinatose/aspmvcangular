@@ -7,10 +7,11 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Error");
-//}
+if (!app.Environment.IsDevelopment())
+    app.UseExceptionHandler("/Error");
+else
+    app.UseDeveloperExceptionPage();
+
 
 // The order here is important. 
 //app.UseDefaultFiles();
@@ -22,7 +23,7 @@ app.MapControllerRoute("Default", "/{controller}/{action}/{id?}", new { controll
 
 //app.UseAuthorization();
 
-// app.MapRazorPages();
+app.MapRazorPages();
 
 app.Run();
 

@@ -15,10 +15,12 @@
     <Folder Include="Controllers\" />
     <Folder Include="Views\" />
     <Folder Include="Views\App\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controllers\" />
     <None Remove="Views\" />
     <None Remove="Views\App\" />
+    <None Remove="Views\Shared\" />
   </ItemGroup>
 </Project>
