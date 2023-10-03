@@ -2,6 +2,7 @@
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -12,10 +13,12 @@ var app = builder.Build();
 //}
 
 // The order here is important. 
-app.UseDefaultFiles();
+//app.UseDefaultFiles();
 app.UseStaticFiles();
 
-//app.UseRouting();
+app.UseRouting();
+
+app.MapControllerRoute("Default", "/{controller}/{action}/{id?}", new { controller = "App", action = "Index" });
 
 //app.UseAuthorization();
 
