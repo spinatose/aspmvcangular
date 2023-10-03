@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,8 +17,22 @@ namespace DutchTreat.Controllers
         [HttpGet("contact")] // makes Contact view discoverable at root of site
         public IActionResult Contact()
         {
-            ViewBag.Title = "Contact us!";
             return View();
+        }
+
+        [HttpPost("contact")]
+        public IActionResult Contact(ContactViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            else
+            {
+
+            }
+
+            return View(model);
         }
 
         public IActionResult About()

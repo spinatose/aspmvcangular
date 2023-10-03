@@ -16,11 +16,16 @@
     <Folder Include="Views\" />
     <Folder Include="Views\App\" />
     <Folder Include="Views\Shared\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controllers\" />
     <None Remove="Views\" />
     <None Remove="Views\App\" />
     <None Remove="Views\Shared\" />
+    <None Remove="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.11" />
   </ItemGroup>
 </Project>

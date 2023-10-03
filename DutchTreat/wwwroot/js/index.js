@@ -1,10 +1,10 @@
 ﻿
 $(document).ready(function () {
-    let myForm = $("#myform");
+    //let myForm = $("#myform");
     let btnBuy = $("#btnBuy");
     let prodInfo = $(".product-props li");
 
-    myForm.hide();
+    //myForm.hide();
     btnBuy.on("click", function () {
         console.log("Buying item...");
     });
