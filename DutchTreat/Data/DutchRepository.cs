@@ -1,4 +1,5 @@
 ﻿using DutchTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DutchTreat.Data
 {
@@ -11,6 +12,23 @@ namespace DutchTreat.Data
         {
             this.context = context;
             this.logger = logger;
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            try
+            {
+                this.logger.LogInformation("GetAllOrders was called!");
+                return this.context.Orders
+
+                    .OrderBy(o => o.OrderDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError($"Failed to get all orders: {ex}");
+            }
+
+            return Enumerable.Empty<Order>();
         }
 
         public IEnumerable<Product> GetAllProducts()
@@ -26,6 +44,24 @@ namespace DutchTreat.Data
             }
 
             return Enumerable.Empty<Product>();
+        }
+
+        public Order? GetOrderById(int id)
+        {
+            try
+            {
+                return this.context.Orders                   
+                    .Include(o => o.Items).ThenInclude(i => i.Product) // the ThenInclude is on the indiv "Item"
+                    .Where(o => o.Id == id)
+                    .FirstOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError($"Failed to get order by id [{id}] ex: {ex}");
+            }
+
+            return null;
         }
 
         public IEnumerable<Product> GetProductsByCategory(string category) => this.context.Products.Where(p => p.Category == category).ToList();
