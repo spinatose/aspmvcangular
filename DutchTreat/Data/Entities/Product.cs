@@ -13,7 +13,7 @@ namespace DutchTreat.Data.Entities
     public string Size { get; set; }
     public decimal Price { get; set; }
     public string Title { get; set; }
-    public string ArtDescription { get; set; }
+    public string? ArtDescription { get; set; }
     public string ArtDating { get; set; }
     public string ArtId { get; set; }
     public string Artist { get; set; }

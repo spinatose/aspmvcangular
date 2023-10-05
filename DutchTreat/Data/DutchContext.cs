@@ -5,21 +5,27 @@ namespace DutchTreat.Data
 {
     public class DutchContext : DbContext
     {
-        private readonly IConfiguration _config;
+        private readonly IConfiguration config;
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
 
         public DutchContext(IConfiguration config)
         {
-            this._config = config;
+            this.config = config;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(this._config.GetConnectionString("DutchContextDb"));
+            optionsBuilder.UseSqlServer(this.config.GetConnectionString("DutchContextDb"));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+
+        }
     }
 }

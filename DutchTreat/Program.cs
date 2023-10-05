@@ -1,5 +1,6 @@
 ﻿using DutchTreat.Data;
 using DutchTreat.Services;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddTransient<IMailService, NullMailService>();
 builder.Services.AddDbContext<DutchContext>();
+builder.Services.AddTransient<DutchSeeder>();
+builder.Services.AddScoped<IDutchRepository, DutchRepository>();
 
 var app = builder.Build();
+
+// populate database with seed data if not already populated
+RunSeeding(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -32,3 +38,12 @@ app.MapRazorPages();
 
 app.Run();
 
+static void RunSeeding(WebApplication app)
+{
+    var scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopeFactory?.CreateScope())
+    {
+        var seeder = scope?.ServiceProvider.GetService<DutchSeeder>() as DutchSeeder;
+        seeder?.Seed();
+    }
+}
