@@ -19,14 +19,19 @@ namespace DutchTreat.Data
             this.context.Add(model);
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public IEnumerable<Order> GetAllOrders(bool includeItems = true)
         {
             try
             {
                 this.logger.LogInformation("GetAllOrders was called!");
-                return this.context.Orders
 
-                    .OrderBy(o => o.OrderDate).ToList();
+                if (includeItems)
+                    return this.context.Orders
+                        .Include(o => o.Items).ThenInclude(i => i.Product) // the ThenInclude is on the indiv "Item"
+                        .OrderBy(o => o.OrderDate).ToList();
+                else 
+                    return this.context.Orders
+                        .OrderBy(o => o.OrderDate).ToList();
             }
             catch (Exception ex)
             {

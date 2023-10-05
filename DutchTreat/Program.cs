@@ -1,6 +1,7 @@
 ﻿using DutchTreat.Data;
 using DutchTreat.Services;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation()
 builder.Services.AddTransient<IMailService, NullMailService>();
 builder.Services.AddDbContext<DutchContext>();
 builder.Services.AddTransient<DutchSeeder>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IDutchRepository, DutchRepository>();
 
 var app = builder.Build();
