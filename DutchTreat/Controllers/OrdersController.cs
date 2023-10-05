@@ -40,7 +40,7 @@ namespace DutchTreat.Controllers
 
                 if (order != null)
                     return Ok(order);
-                else 
+                else
                     return NotFound();
             }
             catch (Exception ex)
@@ -49,6 +49,24 @@ namespace DutchTreat.Controllers
             }
 
             return BadRequest($"Failed to get order by id [{id}]");
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody]Order model)
+        {
+            try
+            {
+                this.repository.AddEntity(model);
+                if (this.repository.SaveAll())
+                    return Created($"/api/orders/{model.Id}", model);
+            }
+            catch (Exception ex)
+            {
+
+                 this.logger.LogError($"Failed to save new order: {ex}");               
+            }
+
+            return BadRequest("Failed to save new order");
         }
     }
 }

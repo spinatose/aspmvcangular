@@ -14,6 +14,11 @@ namespace DutchTreat.Data
             this.logger = logger;
         }
 
+        public void AddEntity(object model)
+        {
+            this.context.Add(model);
+        }
+
         public IEnumerable<Order> GetAllOrders()
         {
             try
