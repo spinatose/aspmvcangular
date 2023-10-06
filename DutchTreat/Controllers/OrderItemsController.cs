@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using DutchTreat.Data;
-using DutchTreat.Data.Entities;
 using DutchTreat.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DutchTreat.Controllers
 {
     [Route("api/orders/{orderid}/items")]
+    [Authorize]
     public class OrderItemsController : Controller
     {
         private readonly ILogger<OrderItemsController> logger;
@@ -25,7 +26,7 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                var order = this.repository.GetOrderById(orderId);
+                var order = this.repository.GetOrderById(User.Identity.Name, orderId);
 
                 if (order != null)
                     return Ok(this.mapper.Map<IEnumerable<OrderItemViewModel>>(order.Items));
@@ -43,7 +44,7 @@ namespace DutchTreat.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int orderId, int id)
         {
-            var order = this.repository.GetOrderById(orderId);
+            var order = this.repository.GetOrderById(User.Identity.Name, orderId);
 
             if (order != null)
             {

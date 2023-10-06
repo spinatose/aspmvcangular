@@ -41,6 +41,30 @@ namespace DutchTreat.Data
             return Enumerable.Empty<Order>();
         }
 
+        public object GetAllOrdersByUser(string username, bool includeItems)
+        {
+            try
+            {
+                this.logger.LogInformation($"{nameof(GetAllOrdersByUser)} was called!");
+
+                if (includeItems)
+                    return this.context.Orders
+                        .Where(o => o.User.UserName == username)
+                        .Include(o => o.Items).ThenInclude(i => i.Product) // the ThenInclude is on the indiv "Item"
+                        .OrderBy(o => o.OrderDate).ToList();
+                else
+                    return this.context.Orders
+                        .Where(o => o.User.UserName == username)
+                        .OrderBy(o => o.OrderDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError($"Failed to get all orders: {ex}");
+            }
+
+            return Enumerable.Empty<Order>();
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             try
@@ -56,13 +80,13 @@ namespace DutchTreat.Data
             return Enumerable.Empty<Product>();
         }
 
-        public Order? GetOrderById(int id)
+        public Order? GetOrderById(string username, int id)
         {
             try
             {
                 return this.context.Orders                   
                     .Include(o => o.Items).ThenInclude(i => i.Product) // the ThenInclude is on the indiv "Item"
-                    .Where(o => o.Id == id)
+                    .Where(o => o.Id == id && o.User.UserName == username)
                     .FirstOrDefault();
 
             }
