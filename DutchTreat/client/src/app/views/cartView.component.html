@@ -1,5 +1,5 @@
 ﻿﻿<h3>Cart</h3>
-<div>Count: <!--{{ store.order.items.length }}--></div>
+<div>Count: {{ store.order.items.length }}</div>
 <table class="table table-condensed table-striped">
     <thead>
         <tr>
@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <!--<tr *ngFor="let item of store.order.items">
+        <tr *ngFor="let item of store.order.items">
             <td>
                 <img src="/img/{{ item.productArtId }}.jpg" alt="{{ item.productArtist }}" class="img-fluid product-thumb" />
             </td>
@@ -19,13 +19,13 @@
             <td>{{ item.quantity }}</td>
             <td>{{ item.unitPrice | currency }}</td>
             <td>{{ item.unitPrice * item.quantity | currency }}</td>
-        </tr>-->
+        </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="5">Subtotal: <!--{{ store.order.subtotal | currency }}--></td>
+            <td colspan="5">Subtotal: <!-- {{ store.order.subtotal | currency }}--></td>
         </tr>
     </tfoot>
-</table> <!--*ngIf="store.order.items.length > 0"-->
-<a class="btn btn-success" routerLink="checkout">Checkout</a>
+</table>
+<a *ngIf="store.order.items.length > 0" class="btn btn-success" routerLink="checkout">Checkout</a>
 <hr />
