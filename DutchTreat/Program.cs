@@ -4,6 +4,7 @@ using DutchTreat.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,17 @@ builder.Services.AddIdentity<StoreUser, IdentityRole>(cfg =>
     { 
         cfg.User.RequireUniqueEmail = true; 
     }).AddEntityFrameworkStores<DutchContext>();
+
+builder.Services.AddAuthentication().AddCookie().AddJwtBearer(cfg =>
+{
+    cfg.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        ValidAudience = builder.Configuration["Token:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:Key"]))
+    };
+});
+
 builder.Services.AddDbContext<DutchContext>();
 builder.Services.AddTransient<DutchSeeder>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
