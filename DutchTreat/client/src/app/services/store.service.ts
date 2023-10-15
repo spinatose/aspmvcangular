@@ -25,7 +25,7 @@ export class Store {
     addToOrder(product: Product) {
         let item: OrderItem | undefined = undefined;
 
-        item = this.order.items.find(o => o.productArtId === product.artId && o.productCategory === product.category && o.productSize === product.size);
+        item = this.order.items.find(o => o.productId === product.id);
         console.log(product.artId); console.log(product.category);
 
         if (item !== undefined) {
