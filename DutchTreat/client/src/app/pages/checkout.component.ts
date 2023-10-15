@@ -1,5 +1,6 @@
 ﻿import { Component } from "@angular/core";
 import { Store } from "../services/store.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -9,11 +10,18 @@ import { Store } from "../services/store.service";
 })
 export class Checkout {
 
-  constructor(public store: Store )  {
+  constructor(public store: Store, private router: Router )  {
   }
 
-  onCheckout() {
-    // TODO
-    alert("Doing checkout");
+    public errorMessage = "";
+
+    onCheckout() {
+        this.errorMessage = "";
+        this.store.checkout().
+          subscribe(() => {
+              this.router.navigate([""]);
+          }, err => {
+              this.errorMessage = `Failed to checkout: ${err.message}`;
+          });
   }
 }

@@ -55,7 +55,6 @@ namespace DutchTreat.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult Shop()
         {
             var products = this.repository.GetAllProducts();
