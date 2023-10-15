@@ -34,4 +34,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
   </ItemGroup>
+
+	<Target Name="PublishingScripts" BeforeTargets="BeforePublish">
+		<Exec Command="npm install" />
+		<Exec Command="gulp" />
+		<Exec Command="npm install" WorkingDirectory=".\\client" />
+		<Exec Command="ng build --configuration production" WorkingDirectory=".\\client" />
+	</Target>
 </Project>
